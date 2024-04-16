@@ -1,11 +1,12 @@
-package com.scaler.yash.productservice13april.model;
+package com.scaler.yash.productservice13april.dto;
 
+import com.scaler.yash.productservice13april.model.Category;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Product { // exactly a table a in your DB
+public class ProductResponseDTO {
     private Integer id;
     private String title;
     private String description;
@@ -13,8 +14,4 @@ public class Product { // exactly a table a in your DB
     private String imageURL;
     private Category category;
 
-
-    // private: called access_modifier
 }
-
-
