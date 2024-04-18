@@ -1,10 +1,17 @@
 package com.scaler.yash.productservice13april.controller;
 
 import com.scaler.yash.productservice13april.dto.CreateProductRequestDTO;
+import com.scaler.yash.productservice13april.dto.ErrorDTO;
 import com.scaler.yash.productservice13april.dto.ProductResponseDTO;
+import com.scaler.yash.productservice13april.exception.ProductNotFoundException;
 import com.scaler.yash.productservice13april.model.Product;
 import com.scaler.yash.productservice13april.service.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class ProductController {
@@ -15,17 +22,27 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public void getAllProducts() {
-        // GET /products
+    public List<ProductResponseDTO> getAllProducts() {
+        List<ProductResponseDTO> dtoList = new ArrayList<>();
+        List<Product> products = productService.getAllProducts();
 
+        for (Product p : products) {
+            dtoList.add(convertProductToResponseDTO(p));
+        }
+        return dtoList;
     }
 
     @GetMapping("/products/{id}")
-    public ProductResponseDTO getProductById(@PathVariable("id") Integer id) {
+    public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable("id") Integer id) throws ProductNotFoundException {
         Product product = productService.getProductById(id);
         // conversion from Product to DTO
+        if (product == null) {
+            throw new ProductNotFoundException("some error occurred");
+            //return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
 
-        return convertProductToResponseDTO(product);
+        ProductResponseDTO response = convertProductToResponseDTO(product);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     private ProductResponseDTO convertProductToResponseDTO(Product product) {
