@@ -1,6 +1,5 @@
 package com.scaler.yash.productservice13april.service;
 
-import com.scaler.yash.productservice13april.dto.CreateProductRequestDTO;
 import com.scaler.yash.productservice13april.model.Product;
 
 import java.util.List;

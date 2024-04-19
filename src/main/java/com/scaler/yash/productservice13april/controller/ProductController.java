@@ -1,7 +1,6 @@
 package com.scaler.yash.productservice13april.controller;
 
 import com.scaler.yash.productservice13april.dto.CreateProductRequestDTO;
-import com.scaler.yash.productservice13april.dto.ErrorDTO;
 import com.scaler.yash.productservice13april.dto.ProductResponseDTO;
 import com.scaler.yash.productservice13april.exception.ProductNotFoundException;
 import com.scaler.yash.productservice13april.model.Product;
