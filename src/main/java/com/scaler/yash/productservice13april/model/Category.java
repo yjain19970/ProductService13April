@@ -1,11 +1,12 @@
 package com.scaler.yash.productservice13april.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.Entity;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
-public class Category {
-    private Long id;
+@Entity
+@Data
+@NoArgsConstructor
+public class Category extends BaseModel {
     private String name;
 }
