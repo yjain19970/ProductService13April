@@ -1,11 +1,12 @@
 package com.scaler.yash.productservice13april.controller;
 
 import com.scaler.yash.productservice13april.dto.CreateProductRequestDTO;
-import com.scaler.yash.productservice13april.dto.ErrorDTO;
 import com.scaler.yash.productservice13april.dto.ProductResponseDTO;
+import com.scaler.yash.productservice13april.exception.CategoryNotFoundException;
 import com.scaler.yash.productservice13april.exception.ProductNotFoundException;
 import com.scaler.yash.productservice13april.model.Product;
 import com.scaler.yash.productservice13april.service.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ import java.util.List;
 public class ProductController {
     private ProductService productService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(@Qualifier("selfProductService") ProductService productService) {
         this.productService = productService;
     }
 
@@ -57,11 +58,11 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public Product createProduct(@RequestBody CreateProductRequestDTO dto) {
+    public Product createProduct(@RequestBody CreateProductRequestDTO dto) throws CategoryNotFoundException {
         Product p = productService.createProduct(dto.getTitle(),
                 dto.getDescription(),
                 dto.getImage(),
-                dto.getPrice());
+                dto.getPrice(), dto.getCategory());
 
         return p;
     }
