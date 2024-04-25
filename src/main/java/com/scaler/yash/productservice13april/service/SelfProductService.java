@@ -1,10 +1,12 @@
 package com.scaler.yash.productservice13april.service;
 
+import com.scaler.yash.productservice13april.dto.ProductResponseDTO;
 import com.scaler.yash.productservice13april.exception.CategoryNotFoundException;
 import com.scaler.yash.productservice13april.model.Category;
 import com.scaler.yash.productservice13april.model.Product;
 import com.scaler.yash.productservice13april.repository.CategoryRepository;
 import com.scaler.yash.productservice13april.repository.ProductRepository;
+import com.scaler.yash.productservice13april.repository.projection.ProductWithTitleAndID;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,6 +52,21 @@ public class SelfProductService implements ProductService {
 
 
         Product updatedProduct = productRepository.save(productToBeSaved);
+
+        List<ProductWithTitleAndID> list = productRepository.findTitleAndIdOfAllProductsByPrice("109.21");
+        convertToYourDTOFromProjection(list);
         return updatedProduct;
+    }
+
+    private void convertToYourDTOFromProjection(List<ProductWithTitleAndID> list) {
+        ProductResponseDTO dto = new ProductResponseDTO();
+        ProductWithTitleAndID pt = list.get(0);
+
+        if(pt.getTitle() !=null){
+            dto.setTitle(pt.getTitle());
+        }
+        if(pt.getId() !=null){
+            dto.setId(pt.getId());
+        }
     }
 }
