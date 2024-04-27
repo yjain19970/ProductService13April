@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Category extends BaseModel {
     private String name;
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
     private List<Product> products;
 }
 
