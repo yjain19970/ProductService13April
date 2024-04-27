@@ -18,4 +18,5 @@ public class BaseModel {
     private Integer id;
     private Date createdAt;
     private Date updatedAt;
+    private String createdByUserId;
 }

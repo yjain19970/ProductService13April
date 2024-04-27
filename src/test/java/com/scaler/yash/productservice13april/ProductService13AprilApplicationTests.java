@@ -1,6 +1,8 @@
 package com.scaler.yash.productservice13april;
 
+import com.scaler.yash.productservice13april.model.Category;
 import com.scaler.yash.productservice13april.model.Product;
+import com.scaler.yash.productservice13april.repository.CategoryRepository;
 import com.scaler.yash.productservice13april.repository.ProductRepository;
 import com.scaler.yash.productservice13april.repository.projection.ProductWithTitleAndID;
 import org.junit.jupiter.api.Test;
@@ -14,6 +16,8 @@ class ProductService13AprilApplicationTests {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private CategoryRepository catRepository;
 
 
     @Test
@@ -22,14 +26,11 @@ class ProductService13AprilApplicationTests {
 
     @Test
     void testMyDB() {
-        Product p = productRepository.getProductFromDBByTitleAndId(1, "soethign");
-        System.out.println(" Product is: " + p);
+        List<Category> p = catRepository.findAll();
+        System.out.println(" Cat is: " + p.size() + " " + p.get(0));
 
-        List<ProductWithTitleAndID> ppp = productRepository.findTitleAndIdOfAllProductsByPrice("109.21");
-        System.out.println("ppp:  " + ppp);
-        System.out.println("id: " + ppp.get(0).getId());
-        System.out.println("desc: " + ppp.get(0).getDescription());
-        System.out.println("title: " + ppp.get(0).getTitle());
+        List<Product> products = p.get(0).getProducts();
+        System.out.println("title: " + products.get(0).getTitle());
     }
 
 }
