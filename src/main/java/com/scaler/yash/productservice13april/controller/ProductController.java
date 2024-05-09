@@ -7,6 +7,7 @@ import com.scaler.yash.productservice13april.exception.ProductNotFoundException;
 import com.scaler.yash.productservice13april.model.Product;
 import com.scaler.yash.productservice13april.service.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -65,5 +66,13 @@ public class ProductController {
                 dto.getPrice(), dto.getCategory());
 
         return p;
+    }
+
+    @GetMapping("/products/{pageNo}/{pageSize}")
+    public ResponseEntity<List<Product>> getPaginatedProduct(@PathVariable("pageNo") Integer pageNo,
+                                                             @PathVariable("pageSize") Integer pageSize) {
+        Page<Product> productPage = productService.getPaginatedProduct(pageSize, pageNo);
+        System.out.println("ProductPage: " + productPage);
+        return ResponseEntity.ok(productPage.getContent());
     }
 }

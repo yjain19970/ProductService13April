@@ -20,7 +20,7 @@ public class Product extends BaseModel { // exactly a table a in your DB
     private String imageURL;
 
     @ManyToOne(cascade = {CascadeType.REMOVE})
-    //@JsonIgnore
+    @JsonIgnore
     private Category category; // this is not a collection.
 }
 

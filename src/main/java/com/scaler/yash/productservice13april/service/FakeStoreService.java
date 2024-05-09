@@ -2,6 +2,7 @@ package com.scaler.yash.productservice13april.service;
 
 import com.scaler.yash.productservice13april.dto.FakeStoreProductDTO;
 import com.scaler.yash.productservice13april.model.Product;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -58,5 +59,10 @@ public class FakeStoreService implements ProductService {
                 requestBody, FakeStoreProductDTO.class);
 
         return response.toProduct();
+    }
+
+    @Override
+    public Page<Product> getPaginatedProduct(Integer pageSize, Integer pageNo) {
+        return null;
     }
 }

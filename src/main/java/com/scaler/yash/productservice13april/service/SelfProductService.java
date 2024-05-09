@@ -7,6 +7,9 @@ import com.scaler.yash.productservice13april.model.Product;
 import com.scaler.yash.productservice13april.repository.CategoryRepository;
 import com.scaler.yash.productservice13april.repository.ProductRepository;
 import com.scaler.yash.productservice13april.repository.projection.ProductWithTitleAndID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,14 +61,21 @@ public class SelfProductService implements ProductService {
         return updatedProduct;
     }
 
+    @Override
+    public Page<Product> getPaginatedProduct(Integer pageSize, Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageSize, pageNo);
+        Page<Product> product = productRepository.findAll(pageable);
+        return product;
+    }
+
     private void convertToYourDTOFromProjection(List<ProductWithTitleAndID> list) {
         ProductResponseDTO dto = new ProductResponseDTO();
         ProductWithTitleAndID pt = list.get(0);
 
-        if(pt.getTitle() !=null){
+        if (pt.getTitle() != null) {
             dto.setTitle(pt.getTitle());
         }
-        if(pt.getId() !=null){
+        if (pt.getId() != null) {
             dto.setId(pt.getId());
         }
     }
