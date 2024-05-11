@@ -9,11 +9,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-public class Product extends BaseModel { // exactly a table a in your DB
+public class Product extends BaseModel implements Serializable { // exactly a table a in your DB
     private String title;
     private String description;
     private String price;

@@ -7,6 +7,8 @@ import com.scaler.yash.productservice13april.exception.ProductNotFoundException;
 import com.scaler.yash.productservice13april.model.Product;
 import com.scaler.yash.productservice13april.service.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,8 +36,9 @@ public class ProductController {
         return dtoList;
     }
 
+    @Cacheable(value = "product")
     @GetMapping("/products/{id}")
-    public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable("id") Integer id) throws ProductNotFoundException {
+    public ProductResponseDTO getProductById(@PathVariable("id") Integer id) throws ProductNotFoundException {
         Product product = productService.getProductById(id);
         // conversion from Product to DTO
         if (product == null) {
@@ -44,7 +47,7 @@ public class ProductController {
         }
 
         ProductResponseDTO response = convertProductToResponseDTO(product);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return response;
     }
 
     private ProductResponseDTO convertProductToResponseDTO(Product product) {
@@ -58,14 +61,21 @@ public class ProductController {
         return dto;
     }
 
+    @CachePut(value = "product", key = "#dto.title", unless = "#dto.title==null")
+    // only insert the key in redis when title is present.
+    // check: how we can save product model in redis cache using this technique.
+    // as of now our DTO is actually getting saved in DB, what we want is:
+    // model should be saved.
+
+    // you will hav eto convert your MODEL to respective serializated object which is getting saved.
     @PostMapping("/products")
     public Product createProduct(@RequestBody CreateProductRequestDTO dto) throws CategoryNotFoundException {
-        Product p = productService.createProduct(dto.getTitle(),
+        Product productResp = productService.createProduct(dto.getTitle(),
                 dto.getDescription(),
                 dto.getImage(),
                 dto.getPrice(), dto.getCategory());
 
-        return p;
+        return productResp;
     }
 
     @GetMapping("/products/{pageNo}/{pageSize}")

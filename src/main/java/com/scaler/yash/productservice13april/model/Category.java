@@ -9,13 +9,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Category extends BaseModel {
+public class Category extends BaseModel implements Serializable {
     private String name;
     @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
     private List<Product> products;

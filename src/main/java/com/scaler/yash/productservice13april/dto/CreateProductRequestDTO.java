@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class CreateProductRequestDTO {
+    Integer id;
     String title;
     Double price;
     String description;

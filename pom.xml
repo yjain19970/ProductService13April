@@ -57,6 +57,11 @@
             <artifactId>flyway-mysql</artifactId>
             <version>9.22.2</version>
         </dependency>
+        <!-- ## Imported the dependency for Redis. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
